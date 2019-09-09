@@ -49,8 +49,9 @@ class scan (Use):
 class config (Use):
   def configure_app (self, app, parser):
     parser.add_argument('-M', '--model', default=None)
-    parser.add_argument('-5', '--G5', dest='model', const='G5', action='store_const', default=None)
-    parser.add_argument('-6', '--G6', dest='model', const='G6', action='store_const', default=None)
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument('-5', '--G5', dest='model', const='G5', action='store_const', default=None)
+    group.add_argument('-6', '--G6', dest='model', const='G6', action='store_const', default=None)
   def main (self, args, app):
     results = dict(**self.device.extra.fields)
     dirty = False
