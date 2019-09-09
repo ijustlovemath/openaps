@@ -40,7 +40,8 @@ class scan (Use):
     # set model = G5 in config
     model = self.device.get('model', 'G4').upper( )
     G5 = model == 'G5'
-    self.dexcom = self.port and readdata.GetDevice(self.port, G5=G5) or None
+    G6 = model == 'G6'
+    self.dexcom = self.port and readdata.GetDevice(self.port, G5=G5, G6=G6) or None
   def main (self, args, app):
     return self.port or ''
 
@@ -49,6 +50,7 @@ class config (Use):
   def configure_app (self, app, parser):
     parser.add_argument('-M', '--model', default=None)
     parser.add_argument('-5', '--G5', dest='model', const='G5', action='store_const', default=None)
+    parser.add_argument('-6', '--G6', dest='model', const='G6', action='store_const', default=None)
   def main (self, args, app):
     results = dict(**self.device.extra.fields)
     dirty = False
